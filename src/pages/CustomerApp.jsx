@@ -7,11 +7,11 @@ const TOSS_CLIENT_KEY = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 const CATEGORIES = [
-  { id: 'basic', title: '2026년 대운 및 신년운세', price: 5900, icon: Star, desc: '재물운, 직장운, 건강운 중심 분석' },
-  { id: 'name', title: '이름풀이 및 개명 추천', price: 8900, icon: BookOpen, desc: '음양오행과 수리를 통한 이름 분석' },
-  { id: 'couple', title: '연애운 및 심층 궁합', price: 8900, icon: Heart, desc: '나와 상대방의 인연과 보완점 분석' },
+  { id: 'free', title: '오늘의 운세 (무료)', price: 0, icon: Sparkles, desc: '오늘 하루 나의 재물운과 애정운 (무료 체험)' },
+  { id: 'basic', title: '원포인트 사주/궁합', price: 4900, icon: Star, desc: '특정 주제에 대한 핵심 사주/궁합 풀이' },
+  { id: 'year', title: '2026년 대박 신년운세', price: 9900, icon: BookOpen, desc: '2026년 전체 운의 흐름과 대운 분석' },
   { id: 'worry', title: '1:1 맞춤 고민상담', price: 11900, icon: MessageCircle, desc: '현재 고민에 대한 명리학적 명쾌한 해답' },
-  { id: 'premium', title: '프리미엄 인생 종합 분석', price: 14900, icon: Crown, desc: '명리+점성술+수비학 10년 주기 마스터 리포트' },
+  { id: 'premium', title: 'VVIP 심층 분석 보고서', price: 49000, icon: Crown, desc: '명리+점성술+수비학 10년 주기 프리미엄 리포트' },
 ];
 
 export default function CustomerApp() {
@@ -24,7 +24,8 @@ export default function CustomerApp() {
   });
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
-  const APP_URL = "https://sajulab.vercel.app";
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+  const APP_URL = "https://sajulab-ten.vercel.app";
 
   const selectedCat = CATEGORIES.find(c => c.id === category);
 
@@ -100,8 +101,10 @@ export default function CustomerApp() {
     }
     
     try {
-      const toss = await loadTossPayments(TOSS_CLIENT_KEY);
-      // toss.requestPayment("카드", { ... }) (테스트 환경에서는 생략)
+      if (selectedCat.price > 0) {
+        const toss = await loadTossPayments(TOSS_CLIENT_KEY);
+        // toss.requestPayment("카드", { ... }) (테스트 환경에서는 생략)
+      }
       
       setLoading(true);
       setStep(2);
@@ -284,6 +287,55 @@ export default function CustomerApp() {
         )}
 
       </div>
+
+      {/* 플로팅 챗봇 버튼 */}
+      <button 
+        onClick={() => setIsChatbotOpen(true)}
+        className="fixed bottom-6 right-6 w-14 h-14 bg-[#2d2822] text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-[#1a1714] transition-colors z-50 border-2 border-[#d4c8b8]/20"
+      >
+        <MessageCircle size={24} />
+      </button>
+
+      {/* 챗봇 FAQ 모달 */}
+      {isChatbotOpen && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[60]" onClick={() => setIsChatbotOpen(false)}>
+          <motion.div 
+            initial={{ opacity: 0, y: 50, scale: 0.9 }} 
+            animate={{ opacity: 1, y: 0, scale: 1 }} 
+            className="bg-white rounded-2xl w-full max-w-md max-h-[80vh] overflow-y-auto shadow-2xl"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="sticky top-0 bg-[#2d2822] text-[#faf8f5] p-5 rounded-t-2xl flex justify-between items-center border-b border-[#3d362e]">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#faf8f5] text-[#2d2822] flex items-center justify-center font-bold text-sm">다온</div>
+                <div>
+                  <h3 className="font-bold">다온 챗봇</h3>
+                  <p className="text-xs text-[#b0a595]">자주 묻는 질문 (FAQ)</p>
+                </div>
+              </div>
+              <button onClick={() => setIsChatbotOpen(false)} className="text-[#b0a595] hover:text-white text-2xl leading-none">&times;</button>
+            </div>
+            
+            <div className="p-5 space-y-4 bg-[#faf8f5] text-[#2d2822]">
+              <div className="bg-white p-4 rounded-xl shadow-sm border border-[#ebe5de]">
+                <p className="font-bold text-[15px] mb-2 text-[#8b7355]">Q. 사주 정보는 어떻게 입력하나요?</p>
+                <p className="text-sm leading-relaxed text-[#6b6255]">본인의 이름, 성별, 생년월일, 태어난 시간을 정확히 기재해 주세요. 시간을 모르실 경우 빈칸으로 두셔도 연월일 위주로 풀이해 드립니다.</p>
+              </div>
+              
+              <div className="bg-white p-4 rounded-xl shadow-sm border border-[#ebe5de]">
+                <p className="font-bold text-[15px] mb-2 text-[#8b7355]">Q. 무료 운세와 유료 사주는 어떤 차이가 있나요?</p>
+                <p className="text-sm leading-relaxed text-[#6b6255]">무료 오늘의 운세는 매일 가볍게 확인할 수 있는 운 흐름입니다. 유료 상품은 고객님의 사주명식을 바탕으로 훨씬 더 깊이 있고 세밀한 프리미엄 분석 리포트를 제공합니다.</p>
+              </div>
+
+              <div className="bg-white p-4 rounded-xl shadow-sm border border-[#ebe5de]">
+                <p className="font-bold text-[15px] mb-2 text-[#8b7355]">Q. 취소 및 환불이 가능한가요?</p>
+                <p className="text-sm leading-relaxed text-[#6b6255]">제공해 드리는 사주 분석 결과는 즉시 화면에 출력되는 디지털 콘텐츠이므로, 결제가 완료된 이후에는 절대 환불이 불가합니다.</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
     </div>
   );
 }
