@@ -7,11 +7,54 @@ const TOSS_CLIENT_KEY = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 const CATEGORIES = [
-  { id: 'free', title: '오늘의 운세 (무료)', price: 0, icon: Sparkles, desc: '오늘 하루 나의 재물운과 애정운', img: '/images/hero.png' },
-  { id: 'basic', title: '원포인트 사주/궁합', price: 4900, icon: Star, desc: '특정 주제 핵심 사주 풀이', img: '/images/card1.png' },
-  { id: 'year', title: '2026년 대박 신년운세', price: 9900, icon: BookOpen, desc: '2026년 전체 운과 대운 분석', img: '/images/card2.png' },
-  { id: 'worry', title: '1:1 맞춤 고민상담', price: 11900, icon: MessageCircle, desc: '고민에 대한 명쾌한 해답', img: '/images/card3.png' },
-  { id: 'premium', title: 'VVIP 심층 분석', price: 49000, icon: Crown, desc: '명리+점성술 10년 주기 리포트', img: '/images/card4.png' },
+  { 
+    id: 'free', title: '오늘의 운세 (무료)', price: 0, icon: Sparkles, desc: '오늘 하루 나의 재물운과 애정운', img: '/images/hero.png',
+    marketing: {
+      title: '무료인데 운세 흐름까지 완벽하게?',
+      sub: '오늘 하루 나에게 다가올 행운과 조심해야 할 점을 미리 알아보고 하루를 시작하세요.',
+      detail: '단순한 운세가 아닙니다. 다온 원장만의 따뜻한 통찰이 담긴 하루의 가이드를 드립니다.'
+    }
+  },
+  { 
+    id: 'love', title: '원포인트 연애운', price: 4900, icon: Heart, desc: '내 사주에 숨겨진 진짜 연애운의 비밀', img: '/images/card1.png',
+    marketing: {
+      title: '왜 나만 연애가 힘들까?\n내 사주에 숨겨진 진짜 연애운의 비밀',
+      sub: '"올해는 좋은 사람 만날 수 있을까?"\n"지금 썸타는 그 사람과 나는 인연일까?"\n"내 매력을 알아봐 줄 진짜 인연은 언제 나타날까?"',
+      detail: '답답했던 연애 고민, 이제 사주 명리학과 트렌디한 웹툰 사주 분석으로 속 시원하게 풀어드립니다. 누구나 쉽게 이해할 수 있는 감성적인 일러스트 리포트로 내 연애의 강점과 약점을 확인하세요.'
+    }
+  },
+  { 
+    id: 'basic', title: '원포인트 사주/진로', price: 4900, icon: Star, desc: '4,900원으로 확인하는 나의 핵심 사주', img: '/images/card1.png',
+    marketing: {
+      title: '내 인생의 터닝포인트는 언제일까?\n4,900원으로 확인하는 나의 핵심 사주',
+      sub: '"나는 어떤 일을 해야 돈을 잘 벌 수 있을까?"\n"내 성향에 맞는 진로는 무엇일까?"\n"올해 나의 전반적인 재물운의 흐름은 어떨까?"',
+      detail: '수십만 원짜리 전체 사주가 부담스러우셨다면, 지금 당장 가장 궁금한 핵심만 쏙쏙 뽑아낸 \'원포인트 사주\'로 빠르고 정확하게 내 운의 흐름을 진단해 보세요.'
+    }
+  },
+  { 
+    id: 'year', title: '2026년 대박 신년운세', price: 9900, icon: BookOpen, desc: '2026년 전체 운과 대운 분석', img: '/images/card2.png',
+    marketing: {
+      title: '2026년, 당신의 해로 만들 준비가 되셨나요?',
+      sub: '"내년에는 승진할 수 있을까?"\n"올해보다 금전운이 더 좋아질까?"',
+      detail: '1년의 큰 흐름을 꿰뚫어 보는 신년운세. 조심해야 할 달과 기회를 잡아야 할 달을 정확히 짚어드립니다.'
+    }
+  },
+  { 
+    id: 'worry', title: '1:1 맞춤 고민상담', price: 11900, icon: MessageCircle, desc: '고민에 대한 명쾌한 해답', img: '/images/card3.png',
+    marketing: {
+      title: '혼자 앓던 고민, 이제 명쾌한 해답을 얻으세요',
+      sub: '"지금 이 선택, 괜찮은 걸까?"\n"이직을 해야 할까, 머물러야 할까?"',
+      detail: '자동화로 해결할 수 없는 개인화된 깊은 고민, 수십 년 경력의 다온 원장이 명리학적 통찰로 당신의 길을 비춰드립니다.'
+    }
+  },
+  { 
+    id: 'premium', title: '명리+점성술 10년 주기 리포트', price: 39000, icon: Crown, desc: '동서양 운명학이 교차 검증한 10년 대운', img: '/images/card4.png',
+    marketing: {
+      title: '내 인생의 진짜 황금기는 언제일까?\n동서양 운명학이 교차 검증한 10년 대운의 비밀',
+      sub: '"지금 하는 이 일이 내 평생 직업이 맞을까?"\n"내 인생에서 가장 돈이 모이는 시기는 언제일까?"\n"결혼, 이직, 독립... 굵직한 터닝포인트는 언제 찾아올까?"',
+      detail: '사주 명리학(동양)으로 그릇을 읽고, 점성술(서양)로 타이밍을 짚어냅니다! 오프라인 상담 10만 원의 가치를 시각화된 프리미엄 리포트로 평생 소장하세요.'
+    }
+  },
 ];
 
 export default function CustomerApp() {
@@ -194,17 +237,24 @@ export default function CustomerApp() {
         {step === 1 && selectedCat && (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6 py-6 pb-24">
             
-            {/* 뒤로가기 헤더 */}
-            <div className="flex items-center gap-3 mb-2">
+            {/* 뒤로가기 및 마케팅 카피 헤더 */}
+            <div className="space-y-4">
               <button onClick={() => setStep(0)} className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-[#2d2822] hover:bg-neutral-50 transition-colors">
                 <ArrowRight size={20} className="rotate-180" />
               </button>
-              <div>
-                <h2 className="text-xl font-black text-[#2d2822]">{selectedCat.title}</h2>
-                <p className="text-[#8b7355] text-sm font-bold">{selectedCat.price === 0 ? '무료' : `${selectedCat.price.toLocaleString()}원`}</p>
+              
+              <div className="bg-white p-6 rounded-3xl shadow-sm border border-[#ebe5de] text-center space-y-4">
+                <h3 className="text-xl font-black text-[#2d2822] whitespace-pre-wrap leading-tight">
+                  {selectedCat.marketing?.title || selectedCat.title}
+                </h3>
+                <div className="text-[#8b7355] text-sm font-bold bg-[#f0eae1] p-4 rounded-xl whitespace-pre-wrap leading-relaxed">
+                  {selectedCat.marketing?.sub || selectedCat.desc}
+                </div>
+                <p className="text-[#6b6255] text-xs leading-relaxed break-keep">
+                  {selectedCat.marketing?.detail}
+                </p>
               </div>
             </div>
-
             {/* 미리보기 (호기심 유발) */}
             <div className="bg-white p-5 rounded-2xl shadow-sm border border-[#ebe5de]">
               <div className="flex items-center gap-2 mb-3">
@@ -268,6 +318,17 @@ export default function CustomerApp() {
                   <textarea rows="3" placeholder="예: 이직을 해야할지 고민입니다..." value={form.worry} onChange={e => setForm({...form, worry: e.target.value})} className="w-full bg-[#fdfcfb] shadow-inner border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] transition-all focus:outline-none focus:border-[#8b7355] focus:ring-2 focus:ring-[#8b7355]/20 resize-none" />
                 </div>
               )}
+              {/* 업셀링 배너 (원포인트 결제 시) */}
+              {(selectedCat.id === 'basic' || selectedCat.id === 'love') && (
+                <div className="bg-gradient-to-r from-[#2d2822] to-[#4a4238] p-4 rounded-2xl shadow-lg relative overflow-hidden flex items-center justify-between mt-6">
+                  <div className="relative z-10 text-white space-y-1">
+                    <div className="text-[10px] font-bold text-[#d4c8b8] tracking-wider">결제자 한정 혜택 🎁</div>
+                    <div className="font-bold text-sm leading-tight">10년 대운 리포트 20% 할인 쿠폰<br/>결과물과 함께 100% 증정!</div>
+                  </div>
+                  <div className="relative z-10 text-3xl">🎫</div>
+                  <div className="absolute right-[-20px] top-[-20px] w-24 h-24 bg-white/5 rounded-full blur-xl"></div>
+                </div>
+              )}
 
               <button 
                 onClick={handlePayment} 
@@ -276,7 +337,13 @@ export default function CustomerApp() {
                 {selectedCat.price === 0 ? "무료로 분석 시작하기" : `${selectedCat.price.toLocaleString()}원 결제하고 분석 시작`} <ArrowRight size={18} />
               </button>
             </div>
-            <div className="text-center text-xs text-[#8a8175]">안전한 토스 페이먼츠 결제 모듈을 사용합니다.</div>
+            
+            {/* 환불 규정 */}
+            <div className="bg-white/50 p-4 rounded-xl text-[10px] text-[#8a8175] space-y-2 border border-[#ebe5de] mt-4">
+              <div className="font-bold text-[#6b6255]">⚠️ 환불 및 취소 규정 (필독)</div>
+              <p className="leading-relaxed">본 상품은 고객님의 고유한 생년월일 정보를 바탕으로 1:1 맞춤 제작되어 발송되는 디지털 콘텐츠입니다. 결과물이 발송된 이후에는 교환 및 환불이 절대 불가하오니 신중한 구매를 부탁드립니다.</p>
+              <div className="text-center pt-2">안전한 토스 페이먼츠 결제 모듈을 사용합니다.</div>
+            </div>
           </motion.div>
         )}
 
