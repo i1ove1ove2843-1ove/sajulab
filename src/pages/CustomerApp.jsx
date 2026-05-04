@@ -283,14 +283,20 @@ export default function CustomerApp() {
         {/* STEP 2: 로딩 화면 (중성적 톤 유지) */}
         {step === 2 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center h-[60vh] space-y-6">
-            <Sparkles className="animate-spin text-[#8b7355]" size={48} />
-            <div className="text-xl font-bold text-center leading-relaxed text-[#2d2822]">
+            <motion.div 
+              animate={{ y: [0, -15, 0], rotate: [0, 5, -5, 0] }} 
+              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+              className="w-32 h-32 rounded-full shadow-[0_0_40px_rgba(235,200,180,0.6)] relative overflow-hidden"
+            >
+              <img src="/images/loading_ball.png" alt="분석 중..." className="w-full h-full object-cover" />
+            </motion.div>
+            <div className="text-xl font-bold text-center leading-relaxed text-[#2d2822] mt-4">
               다온 원장님이 신중하게<br/>명식을 짚어보고 있습니다...
             </div>
             <div className="text-sm text-[#8a8175] text-center px-6 leading-relaxed">
               "오랜 세월 쌓아온 깊은 내공과 진심 어린 상담으로<br/>당신의 곁에서 등불이 되어드리겠습니다."<br/><span className="text-xs mt-2 block opacity-70">(약 10~15초 소요)</span>
             </div>
-            <div className="w-48 h-1 bg-[#ebe5de] rounded-full overflow-hidden">
+            <div className="w-48 h-1 bg-[#ebe5de] rounded-full overflow-hidden mt-2">
               <div className="h-full bg-[#8b7355] w-1/2 animate-pulse" />
             </div>
           </motion.div>
