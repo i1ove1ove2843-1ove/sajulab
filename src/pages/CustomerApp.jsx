@@ -60,20 +60,18 @@ export default function CustomerApp() {
       }
     `;
 
-    if (category === 'basic') {
-      return `너는 수십년 경력의 명리학자 다온 원장이야. 다음 고객의 2026년 대운과 신년운세를 분석해줘. 친근하지만 전문가처럼 존댓말로 작성해.
+    if (category === 'free') {
+      return `너는 수십년 경력의 명리학자 다온 원장이야. 고객의 오늘 하루 운세(재물운, 애정운, 오늘 조심할 점)를 가볍고 재미있게 분석해줘.
       고객정보: ${baseInfo}
       ${jsonInstruction}`;
-    } else if (category === 'name') {
-      return `너는 수십년 경력의 성명학자이자 명리학자 다온 원장이야. 고객의 이름과 사주를 분석해줘.
-      고객정보: ${baseInfo}, 한자이름: ${form.hanjaName || '없음'}
-      음양오행, 수리사격, 발음오행을 분석하고 개명이 필요한지 조언해줘.
+    } else if (category === 'basic') {
+      return `너는 수십년 경력의 명리학자 다온 원장이야. 고객의 핵심 원포인트 사주와 타고난 기질, 그리고 상대방 정보가 있다면 궁합을 분석해줘.
+      본인 정보: ${baseInfo}
+      상대방 정보: 이름 ${form.partnerName || '없음'}, 생년월일 ${form.partnerBirth || '없음'}
       ${jsonInstruction}`;
-    } else if (category === 'couple') {
-      return `너는 수십년 경력의 명리학자 다온 원장이야. 두 사람의 궁합과 연애운을 분석해줘.
-      본인: ${baseInfo}
-      상대방: 이름 ${form.partnerName}, 생년월일 ${form.partnerBirth}
-      서로 보완형인지 소모형인지, 언제 결혼운이나 위기가 있는지 분석해줘.
+    } else if (category === 'year') {
+      return `너는 수십년 경력의 명리학자 다온 원장이야. 고객의 2026년 대운과 신년운세를 분석해줘.
+      고객정보: ${baseInfo}
       ${jsonInstruction}`;
     } else if (category === 'worry') {
       return `너는 수십년 경력의 명리학자 다온 원장이야. 고객이 고민을 털어놓았어. 사주를 바탕으로 현실적인 조언과 해결책을 제시해줘.
@@ -89,7 +87,6 @@ export default function CustomerApp() {
       3. 수비학 분석 (라이프패스 넘버, 운이 열리는 시기)
       4. 인생 황금기 및 정점 TOP 5 (연도, 나이, 상승이유, 기회)
       5. 10년 단위 인생 흐름 (40대~70대 점수화)
-      6. 이름 궁합 분석
       ${jsonInstruction}`;
     }
   };
@@ -198,25 +195,19 @@ export default function CustomerApp() {
               </div>
 
               {/* 동적 필드 */}
-              {category === 'name' && (
-                <div className="space-y-2 pt-2 border-t border-[#f0eae1]">
-                  <label className="text-xs font-bold text-[#6b6255]">한자 이름 (선택)</label>
-                  <input type="text" placeholder="洪吉童" value={form.hanjaName} onChange={e => setForm({...form, hanjaName: e.target.value})} className="w-full bg-[#faf8f5] border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] focus:outline-none focus:border-[#8b7355]" />
-                </div>
-              )}
-              {category === 'couple' && (
+              {category === 'basic' && (
                 <div className="space-y-4 pt-4 border-t border-[#f0eae1]">
-                  <div className="text-sm font-bold text-[#8b7355]">상대방 정보 입력</div>
+                  <div className="text-sm font-bold text-[#8b7355]">상대방 정보 입력 (궁합 원할 시)</div>
                   <div className="grid grid-cols-2 gap-4">
-                    <input type="text" placeholder="상대방 이름" value={form.partnerName} onChange={e => setForm({...form, partnerName: e.target.value})} className="w-full bg-[#faf8f5] border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] focus:outline-none focus:border-[#8b7355]" />
-                    <input type="text" placeholder="생년월일(8자리)" value={form.partnerBirth} onChange={e => setForm({...form, partnerBirth: e.target.value})} className="w-full bg-[#faf8f5] border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] focus:outline-none focus:border-[#8b7355]" />
+                    <input type="text" placeholder="상대방 이름" value={form.partnerName} onChange={e => setForm({...form, partnerName: e.target.value})} className="w-full bg-[#fdfcfb] shadow-inner border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] transition-all focus:outline-none focus:border-[#8b7355] focus:ring-2 focus:ring-[#8b7355]/20" />
+                    <input type="text" placeholder="생년월일(8자리)" value={form.partnerBirth} onChange={e => setForm({...form, partnerBirth: e.target.value})} className="w-full bg-[#fdfcfb] shadow-inner border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] transition-all focus:outline-none focus:border-[#8b7355] focus:ring-2 focus:ring-[#8b7355]/20" />
                   </div>
                 </div>
               )}
               {category === 'worry' && (
                 <div className="space-y-2 pt-4 border-t border-[#f0eae1]">
                   <label className="text-xs font-bold text-[#6b6255]">현재 가장 고민되는 부분</label>
-                  <textarea rows="3" placeholder="예: 이직을 해야할지 고민입니다..." value={form.worry} onChange={e => setForm({...form, worry: e.target.value})} className="w-full bg-[#faf8f5] border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] focus:outline-none focus:border-[#8b7355] resize-none" />
+                  <textarea rows="3" placeholder="예: 이직을 해야할지 고민입니다..." value={form.worry} onChange={e => setForm({...form, worry: e.target.value})} className="w-full bg-[#fdfcfb] shadow-inner border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] transition-all focus:outline-none focus:border-[#8b7355] focus:ring-2 focus:ring-[#8b7355]/20 resize-none" />
                 </div>
               )}
 
