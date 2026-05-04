@@ -16,7 +16,7 @@ const CATEGORIES = [
     }
   },
   { 
-    id: 'love', title: '원포인트 연애운', price: 4900, icon: Heart, desc: '내 사주에 숨겨진 진짜 연애운의 비밀', img: '/images/card1.png',
+    id: 'love', title: '원포인트 연애운', price: 4900, icon: Heart, desc: '내 사주에 숨겨진 진짜 연애운의 비밀', img: '/images/card_love.png',
     marketing: {
       title: '왜 나만 연애가 힘들까?\n내 사주에 숨겨진 진짜 연애운의 비밀',
       sub: '"올해는 좋은 사람 만날 수 있을까?"\n"지금 썸타는 그 사람과 나는 인연일까?"\n"내 매력을 알아봐 줄 진짜 인연은 언제 나타날까?"',
