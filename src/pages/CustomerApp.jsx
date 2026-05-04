@@ -136,7 +136,7 @@ export default function CustomerApp() {
   };
 
   return (
-    <div className={`min-h-screen font-sans relative transition-colors duration-700 ${step === 3 ? 'bg-[#150e1f] text-white' : 'bg-[#faf8f5] text-neutral-900'}`}>
+    <div className={`min-h-screen font-sans relative transition-colors duration-700 ${step === 3 ? 'bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#2a1d45] via-[#150e1f] to-[#0a0710] text-white' : 'bg-[#faf8f5] text-neutral-900'}`}>
       
       <div className="max-w-md mx-auto w-full p-6 relative z-10 min-h-screen flex flex-col justify-center">
         
@@ -178,11 +178,11 @@ export default function CustomerApp() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-[#6b6255]">이름</label>
-                  <input type="text" placeholder="홍길동" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full bg-[#faf8f5] border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] focus:outline-none focus:border-[#8b7355]" />
+                  <input type="text" placeholder="홍길동" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full bg-[#fdfcfb] shadow-inner border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] transition-all focus:outline-none focus:border-[#8b7355] focus:ring-2 focus:ring-[#8b7355]/20" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-[#6b6255]">성별</label>
-                  <select value={form.gender} onChange={e => setForm({...form, gender: e.target.value})} className="w-full bg-[#faf8f5] border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] focus:outline-none focus:border-[#8b7355]">
+                  <select value={form.gender} onChange={e => setForm({...form, gender: e.target.value})} className="w-full bg-[#fdfcfb] shadow-inner border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] transition-all focus:outline-none focus:border-[#8b7355] focus:ring-2 focus:ring-[#8b7355]/20">
                     <option value="여">여성</option>
                     <option value="남">남성</option>
                   </select>
@@ -190,11 +190,11 @@ export default function CustomerApp() {
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-[#6b6255]">생년월일 (8자리)</label>
-                <input type="text" placeholder="19950505" value={form.birth} onChange={e => setForm({...form, birth: e.target.value})} className="w-full bg-[#faf8f5] border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] focus:outline-none focus:border-[#8b7355]" />
+                <input type="text" placeholder="19950505" value={form.birth} onChange={e => setForm({...form, birth: e.target.value})} className="w-full bg-[#fdfcfb] shadow-inner border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] transition-all focus:outline-none focus:border-[#8b7355] focus:ring-2 focus:ring-[#8b7355]/20" />
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-[#6b6255]">태어난 시간 (선택)</label>
-                <input type="text" placeholder="오후 2시 30분" value={form.time} onChange={e => setForm({...form, time: e.target.value})} className="w-full bg-[#faf8f5] border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] focus:outline-none focus:border-[#8b7355]" />
+                <input type="text" placeholder="오후 2시 30분" value={form.time} onChange={e => setForm({...form, time: e.target.value})} className="w-full bg-[#fdfcfb] shadow-inner border border-[#e3dcd3] rounded-xl px-4 py-3 text-[#2d2822] transition-all focus:outline-none focus:border-[#8b7355] focus:ring-2 focus:ring-[#8b7355]/20" />
               </div>
 
               {/* 동적 필드 */}
@@ -220,8 +220,11 @@ export default function CustomerApp() {
                 </div>
               )}
 
-              <button onClick={handlePayment} className="w-full bg-[#2d2822] hover:bg-[#1a1714] text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95 mt-4">
-                {selectedCat.price.toLocaleString()}원 결제하고 분석 시작 <ArrowRight size={18} />
+              <button 
+                onClick={handlePayment} 
+                className="w-full bg-gradient-to-r from-[#2d2822] to-[#4a4238] hover:from-[#1a1714] hover:to-[#2d2822] text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 shadow-xl shadow-[#2d2822]/20 transition-all active:scale-95 mt-4"
+              >
+                {selectedCat.price === 0 ? "무료로 분석 시작하기" : `${selectedCat.price.toLocaleString()}원 결제하고 분석 시작`} <ArrowRight size={18} />
               </button>
             </div>
             <div className="text-center text-xs text-[#8a8175]">안전한 토스 페이먼츠 결제 모듈을 사용합니다.</div>
@@ -253,7 +256,7 @@ export default function CustomerApp() {
 
             <div className="space-y-5">
               {result.sections && result.sections.map((sec, idx) => (
-                <div key={idx} className="bg-[#241b35] border border-[#3d2f5b] rounded-2xl p-5 shadow-xl relative overflow-hidden">
+                <div key={idx} className="bg-[#241b35]/80 backdrop-blur-md border border-[#4d3b73] rounded-2xl p-6 shadow-2xl relative overflow-hidden">
                   {/* 상단 뱃지 */}
                   <div className="inline-flex px-3 py-1 bg-black text-white text-xs font-bold rounded-full mb-4 shadow-sm border border-white/10">
                     {sec.badge}
