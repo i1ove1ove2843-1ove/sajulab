@@ -50,11 +50,11 @@ export default function CustomerApp() {
   const getPrompt = () => {
     const baseInfo = `이름: ${form.name}, 성별: ${form.gender}, 생년월일: ${form.birth}, 태어난 시간: ${form.time || '모름'}`;
     const jsonInstruction = `
-      반드시 다음 JSON 형식으로만 응답해. 백틱이나 마크다운 없이 순수 JSON만 출력해.
+      반드시 다음 JSON 형식으로만 응답해. 백틱이나 마크다운 없이 순수 JSON만 출력해. 그리고 내용(content) 작성 시 절대로 **나 * 같은 마크다운 기호를 쓰지 말고 오직 평문(Plain text)으로만 작성해.
       {
         "title": "결과 메인 타이틀",
         "sections": [
-          { "badge": "섹션 소제목(예: 음양오행, 올해의 팁 등)", "content": "자세한 분석 내용 텍스트", "highlight": "가장 중요한 핵심 한 줄 요약 (노란색으로 표시됨, 없으면 빈 문자열)" }
+          { "badge": "섹션 소제목(예: 음양오행, 올해의 팁 등)", "content": "자세한 분석 내용 텍스트 (줄바꿈 가능)", "highlight": "가장 중요한 핵심 한 줄 요약 (노란색으로 표시됨, 없으면 빈 문자열)" }
         ]
       }
     `;
@@ -263,9 +263,13 @@ export default function CustomerApp() {
                     </div>
                   )}
 
-                  {/* 본문 */}
-                  <div className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">
-                    {sec.content}
+                  {/* 본문 (가독성 극대화) */}
+                  <div className="text-white/90 text-[15px] leading-[1.85] tracking-[-0.02em] break-keep font-medium">
+                    {sec.content.split('\n').map((line, i) => (
+                      <p key={i} className="mb-4 last:mb-0">
+                        {line.replace(/\*\*/g, '').trim()}
+                      </p>
+                    ))}
                   </div>
                 </div>
               ))}
