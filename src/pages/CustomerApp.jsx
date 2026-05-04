@@ -7,15 +7,15 @@ const TOSS_CLIENT_KEY = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 const CATEGORIES = [
-  { id: 'free', title: '오늘의 운세 (무료)', price: 0, icon: Sparkles, desc: '오늘 하루 나의 재물운과 애정운 (무료 체험)' },
-  { id: 'basic', title: '원포인트 사주/궁합', price: 4900, icon: Star, desc: '특정 주제에 대한 핵심 사주/궁합 풀이' },
-  { id: 'year', title: '2026년 대박 신년운세', price: 9900, icon: BookOpen, desc: '2026년 전체 운의 흐름과 대운 분석' },
-  { id: 'worry', title: '1:1 맞춤 고민상담', price: 11900, icon: MessageCircle, desc: '현재 고민에 대한 명리학적 명쾌한 해답' },
-  { id: 'premium', title: 'VVIP 심층 분석 보고서', price: 49000, icon: Crown, desc: '명리+점성술+수비학 10년 주기 프리미엄 리포트' },
+  { id: 'free', title: '오늘의 운세 (무료)', price: 0, icon: Sparkles, desc: '오늘 하루 나의 재물운과 애정운', img: '/images/hero.png' },
+  { id: 'basic', title: '원포인트 사주/궁합', price: 4900, icon: Star, desc: '특정 주제 핵심 사주 풀이', img: '/images/card1.png' },
+  { id: 'year', title: '2026년 대박 신년운세', price: 9900, icon: BookOpen, desc: '2026년 전체 운과 대운 분석', img: '/images/card2.png' },
+  { id: 'worry', title: '1:1 맞춤 고민상담', price: 11900, icon: MessageCircle, desc: '고민에 대한 명쾌한 해답', img: '/images/card3.png' },
+  { id: 'premium', title: 'VVIP 심층 분석', price: 49000, icon: Crown, desc: '명리+점성술 10년 주기 리포트', img: '/images/card4.png' },
 ];
 
 export default function CustomerApp() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [category, setCategory] = useState('basic');
   const [form, setForm] = useState({
     name: '', birth: '', time: '', gender: '여',
@@ -138,39 +138,97 @@ export default function CustomerApp() {
       <div className="max-w-md mx-auto w-full p-6 relative z-10 min-h-screen flex flex-col justify-center">
         
         {/* STEP 1: 입력 및 결제 (중성적 웜 베이지 톤) */}
-        {step === 1 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8 py-10">
-            <div className="text-center space-y-3">
+        {/* STEP 0: 스토어프론트 (메인 홈) */}
+        {step === 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 py-6 pb-24">
+            
+            <div className="text-center space-y-4 mb-8">
               <h1 className="text-4xl font-black tracking-tight text-[#2d2822]">
                 다온명리원
               </h1>
-              <p className="text-[#6b6255] font-medium text-sm">수십 년 경력의 다온 원장님이 당신의 운명과 흐름을 깊이 있게 풀어냅니다</p>
+              <p className="text-[#6b6255] font-medium text-sm leading-relaxed px-4">
+                "당신의 이야기에 귀 기울이는 시간, 다온 원장이 함께합니다."<br/><br/>
+                사람마다 타고난 빛깔이 있고, 흘러가는 계절이 있습니다.<br/>
+                다온 원장은 수많은 분들의 사주 명식을 마주하며<br/>
+                글자 너머에 담긴 당신의 삶을 읽어드립니다.
+              </p>
             </div>
 
-            <div className="space-y-4">
-              <label className="text-sm font-bold text-[#4a4238] px-2">원하시는 상담을 선택하세요</label>
-              <div className="grid grid-cols-1 gap-3">
-                {CATEGORIES.map(cat => {
-                  const Icon = cat.icon;
-                  return (
-                    <button 
-                      key={cat.id} onClick={() => setCategory(cat.id)}
-                      className={`p-4 rounded-2xl border-2 text-left transition-all flex items-center gap-4 ${category === cat.id ? 'border-[#8b7355] bg-[#f0eae1] shadow-md' : 'border-transparent bg-white shadow-sm hover:bg-neutral-50'}`}
-                    >
-                      <div className={`p-3 rounded-full ${category === cat.id ? 'bg-[#8b7355] text-white' : 'bg-[#f0eae1] text-[#8b7355]'}`}>
-                        <Icon size={20} />
-                      </div>
-                      <div className="flex-1">
-                        <div className="font-bold text-[#2d2822]">{cat.title}</div>
-                        <div className="text-xs text-[#8a8175] mt-1">{cat.desc}</div>
-                      </div>
-                      <div className="font-black text-[#8b7355]">{cat.price.toLocaleString()}원</div>
-                    </button>
-                  );
-                })}
+            {/* 히어로 배너 (무료 운세) */}
+            <div 
+              onClick={() => { setCategory('free'); setStep(1); }}
+              className="relative w-full h-56 rounded-3xl overflow-hidden cursor-pointer shadow-lg group"
+            >
+              <img src={CATEGORIES[0].img} alt="오늘의 운세" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-6">
+                <div className="inline-block px-3 py-1 bg-[#8b7355] text-white text-xs font-bold rounded-full mb-2 w-max shadow-md">무료 체험</div>
+                <h2 className="text-2xl font-black text-white">{CATEGORIES[0].title}</h2>
+                <p className="text-white/80 text-sm mt-1">{CATEGORIES[0].desc}</p>
+                <div className="mt-3 flex items-center text-white text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                  바로 확인하기 <ArrowRight size={16} className="ml-1" />
+                </div>
               </div>
             </div>
 
+            {/* 2x2 유료 상품 그리드 */}
+            <div className="grid grid-cols-2 gap-4">
+              {CATEGORIES.slice(1).map(cat => (
+                <div 
+                  key={cat.id} 
+                  onClick={() => { setCategory(cat.id); setStep(1); }}
+                  className="relative h-48 rounded-2xl overflow-hidden cursor-pointer shadow-md group"
+                >
+                  <img src={cat.img} alt={cat.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-4">
+                    <div className="text-[#d4c8b8] font-bold text-xs mb-1">{cat.price.toLocaleString()}원</div>
+                    <div className="text-white font-bold leading-tight mb-1 break-keep">{cat.title}</div>
+                    <div className="text-white/60 text-[10px] leading-tight line-clamp-2 break-keep">{cat.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* STEP 1: 상세 페이지 및 정보 입력 */}
+        {step === 1 && selectedCat && (
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6 py-6 pb-24">
+            
+            {/* 뒤로가기 헤더 */}
+            <div className="flex items-center gap-3 mb-2">
+              <button onClick={() => setStep(0)} className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-[#2d2822] hover:bg-neutral-50 transition-colors">
+                <ArrowRight size={20} className="rotate-180" />
+              </button>
+              <div>
+                <h2 className="text-xl font-black text-[#2d2822]">{selectedCat.title}</h2>
+                <p className="text-[#8b7355] text-sm font-bold">{selectedCat.price === 0 ? '무료' : `${selectedCat.price.toLocaleString()}원`}</p>
+              </div>
+            </div>
+
+            {/* 미리보기 (호기심 유발) */}
+            <div className="bg-white p-5 rounded-2xl shadow-sm border border-[#ebe5de]">
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkles size={16} className="text-[#8b7355]" />
+                <span className="font-bold text-[#4a4238] text-sm">이런 식으로 분석해 드려요!</span>
+              </div>
+              <div className="bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#2a1d45] via-[#150e1f] to-[#0a0710] rounded-xl p-4 text-white relative overflow-hidden shadow-inner">
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center z-10">
+                  <div className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-md border border-white/30 text-white font-bold text-sm shadow-xl">
+                    분석 완료 후 원본 확인 가능 🔒
+                  </div>
+                </div>
+                <div className="opacity-60 space-y-3 pointer-events-none select-none filter blur-[2px]">
+                  <div className="inline-block px-2 py-1 bg-purple-900/40 text-purple-200 text-[10px] font-bold rounded-full border border-purple-500/30">핵심 요약</div>
+                  <div className="font-bold text-lg">타고난 기운과 올해의 흐름</div>
+                  <p className="text-sm text-white/80 leading-relaxed">
+                    명식 분석 결과 큰 변화를 맞이하는 시기입니다. 당신이 가진 고유한 장점이 빛을 발하며, 특히 이동수와 함께 재물운이 강하게 작용하여...
+                  </p>
+                  <div className="mt-2 text-yellow-300 text-sm font-bold">💡 다온 원장의 조언: 무리한 확장보다는...</div>
+                </div>
+              </div>
+            </div>
+
+            {/* 입력 폼 */}
             <div className="bg-white p-6 rounded-3xl shadow-sm border border-[#ebe5de] space-y-5">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
@@ -229,7 +287,9 @@ export default function CustomerApp() {
             <div className="text-xl font-bold text-center leading-relaxed text-[#2d2822]">
               다온 원장님이 신중하게<br/>명식을 짚어보고 있습니다...
             </div>
-            <div className="text-sm text-[#8a8175]">수십 년 경력의 비법으로 명식을 정밀 분석 중입니다 (약 10초 소요)</div>
+            <div className="text-sm text-[#8a8175] text-center px-6 leading-relaxed">
+              "오랜 세월 쌓아온 깊은 내공과 진심 어린 상담으로<br/>당신의 곁에서 등불이 되어드리겠습니다."<br/><span className="text-xs mt-2 block opacity-70">(약 10~15초 소요)</span>
+            </div>
             <div className="w-48 h-1 bg-[#ebe5de] rounded-full overflow-hidden">
               <div className="h-full bg-[#8b7355] w-1/2 animate-pulse" />
             </div>
@@ -272,7 +332,10 @@ export default function CustomerApp() {
               ))}
             </div>
 
-            <div className="pt-8">
+            <div className="pt-8 space-y-6">
+              <div className="text-center text-[#d4c8b8] text-sm leading-relaxed px-4 opacity-80 font-medium">
+                "다온(多溫) — 많은 온기를 전한다는 뜻처럼,<br/>당신의 마음에 따스한 빛 하나 놓아드리는<br/>상담이 되겠습니다."
+              </div>
               <button onClick={() => window.location.reload()} className="w-full py-4 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-colors">
                 다른 사주 보러가기
               </button>
