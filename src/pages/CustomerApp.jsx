@@ -232,7 +232,7 @@ export default function CustomerApp() {
             <div className="text-xl font-bold text-center leading-relaxed text-[#2d2822]">
               다온 원장님이 신중하게<br/>명식을 짚어보고 있습니다...
             </div>
-            <div className="text-sm text-[#8a8175]">AI 분석 엔진 가동 중 (약 10초 소요)</div>
+            <div className="text-sm text-[#8a8175]">수십 년 경력의 비법으로 명식을 정밀 분석 중입니다 (약 10초 소요)</div>
             <div className="w-48 h-1 bg-[#ebe5de] rounded-full overflow-hidden">
               <div className="h-full bg-[#8b7355] w-1/2 animate-pulse" />
             </div>
