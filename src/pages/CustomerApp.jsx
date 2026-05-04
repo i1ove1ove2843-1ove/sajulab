@@ -133,7 +133,7 @@ export default function CustomerApp() {
   };
 
   return (
-    <div className={`min-h-screen font-sans relative transition-colors duration-700 ${step === 3 ? 'bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#2a1d45] via-[#150e1f] to-[#0a0710] text-white' : 'bg-[#faf8f5] text-neutral-900'}`}>
+    <div className={`min-h-screen font-sans relative transition-colors duration-700 ${step === 3 ? 'bg-gradient-to-br from-[#fff5eb] via-[#f9e0d9] to-[#e6d0d9] text-[#3e2c22]' : 'bg-[#faf8f5] text-neutral-900'}`}>
       
       <div className="max-w-md mx-auto w-full p-6 relative z-10 min-h-screen flex flex-col justify-center">
         
@@ -302,32 +302,32 @@ export default function CustomerApp() {
           </motion.div>
         )}
 
-        {/* STEP 3: 결과 화면 (지피지기 스타일의 다크 퍼플/네이비 프리미엄 UI) */}
+        {/* STEP 3: 결과 화면 (3안: 따뜻한 위로의 석양 UI) */}
         {step === 3 && result && (
           <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="py-8 space-y-6">
             
             <div className="text-center mb-10 space-y-2">
-               <div className="inline-block px-4 py-1 bg-purple-900/40 text-purple-200 text-[10px] font-bold rounded-full tracking-widest border border-purple-500/30 mb-2">DAON PREMIUM REPORT</div>
-               <h2 className="text-2xl font-black text-white leading-tight">{result.title}</h2>
+               <div className="inline-block px-4 py-1 bg-[#d28b71]/10 text-[#b05a3b] text-[10px] font-bold rounded-full tracking-widest border border-[#d28b71]/20 mb-2 shadow-sm">DAON PREMIUM REPORT</div>
+               <h2 className="text-2xl font-black text-[#3e2c22] leading-tight">{result.title}</h2>
             </div>
 
             <div className="space-y-5">
               {result.sections && result.sections.map((sec, idx) => (
-                <div key={idx} className="bg-[#241b35]/80 backdrop-blur-md border border-[#4d3b73] rounded-2xl p-6 shadow-2xl relative overflow-hidden">
+                <div key={idx} className="bg-white/70 backdrop-blur-md border border-white/60 rounded-2xl p-6 shadow-xl relative overflow-hidden">
                   {/* 상단 뱃지 */}
-                  <div className="inline-flex px-3 py-1 bg-black text-white text-xs font-bold rounded-full mb-4 shadow-sm border border-white/10">
+                  <div className="inline-flex px-3 py-1 bg-[#8b7355] text-white text-xs font-bold rounded-full mb-4 shadow-sm">
                     {sec.badge}
                   </div>
                   
-                  {/* 하이라이트 (노란색) */}
+                  {/* 하이라이트 (석양/오렌지 톤) */}
                   {sec.highlight && (
-                    <div className="text-[#ffd700] font-bold text-sm mb-3 pl-2 border-l-2 border-[#ffd700]">
+                    <div className="text-[#a0522d] font-bold text-sm mb-3 pl-3 border-l-2 border-[#a0522d] bg-[#a0522d]/5 p-2 rounded-r-lg">
                       {sec.highlight}
                     </div>
                   )}
 
-                  {/* 본문 (가독성 극대화) */}
-                  <div className="text-white/90 text-[15px] leading-[1.85] tracking-[-0.02em] break-keep font-medium">
+                  {/* 본문 (가독성 극대화된 브라운 텍스트) */}
+                  <div className="text-[#4a3f35] text-[15px] leading-[1.85] tracking-[-0.02em] break-keep font-medium">
                     {sec.content.split('\n').map((line, i) => (
                       <p key={i} className="mb-4 last:mb-0">
                         {line.replace(/\*\*/g, '').trim()}
@@ -339,10 +339,10 @@ export default function CustomerApp() {
             </div>
 
             <div className="pt-8 space-y-6">
-              <div className="text-center text-[#d4c8b8] text-sm leading-relaxed px-4 opacity-80 font-medium">
+              <div className="text-center text-[#8b7355] text-sm leading-relaxed px-4 font-bold">
                 "다온(多溫) — 많은 온기를 전한다는 뜻처럼,<br/>당신의 마음에 따스한 빛 하나 놓아드리는<br/>상담이 되겠습니다."
               </div>
-              <button onClick={() => window.location.reload()} className="w-full py-4 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-colors">
+              <button onClick={() => window.location.reload()} className="w-full py-4 bg-[#2d2822] text-white font-bold rounded-xl hover:bg-[#1a1714] shadow-lg transition-colors">
                 다른 사주 보러가기
               </button>
             </div>
