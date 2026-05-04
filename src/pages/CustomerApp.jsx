@@ -4,7 +4,7 @@ import { Sparkles, ArrowRight, Heart, Star, BookOpen, Crown, MessageCircle } fro
 import { motion } from 'framer-motion';
 
 const TOSS_CLIENT_KEY = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
-const API_KEY = "AIzaSyASMuycjo-NceiCLlth_Hi65AKWM-Is1V4";
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 const CATEGORIES = [
   { id: 'basic', title: '2026년 대운 및 신년운세', price: 5900, icon: Star, desc: '재물운, 직장운, 건강운 중심 분석' },

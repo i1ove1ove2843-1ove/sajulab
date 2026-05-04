@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Sparkles, RefreshCw, Play, Download, Zap, MessageSquare, Image as ImageIcon, Volume2, Shuffle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { generateRandomStylePrompt } from '../utils/styleEngine';
-const API_KEY = "AIzaSyASMuycjo-NceiCLlth_Hi65AKWM-Is1V4"; 
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 export default function AdminBuilder() {
   const [loading, setLoading] = useState(false);
