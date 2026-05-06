@@ -213,7 +213,10 @@ export default function CustomerApp() {
           throw new Error('서버 응답 형식이 올바르지 않습니다.');
         }
 
-        if (!analyzeRes.ok) throw new Error(analyzeData.message || '분석 실패');
+        if (!analyzeRes.ok) {
+          const errorDetail = await analyzeRes.text();
+          throw new Error(`서버 에러 (${analyzeRes.status}): ${errorDetail.substring(0, 50)}...`);
+        }
 
         const content = isLocal && !analyzeData.content ? analyzeData.candidates?.[0]?.content?.parts?.[0]?.text : analyzeData.content;
         
