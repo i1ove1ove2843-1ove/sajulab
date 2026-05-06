@@ -216,10 +216,19 @@ export default function CustomerApp() {
         if (!analyzeRes.ok) throw new Error(analyzeData.message || '분석 실패');
 
         const content = isLocal && !analyzeData.content ? analyzeData.candidates?.[0]?.content?.parts?.[0]?.text : analyzeData.content;
-        const cleanJson = (content || "").replace(/```json|```/g, "").trim();
-        setResult(JSON.parse(cleanJson));
-        setLoading(false);
-        setStep(3);
+        
+        // 강력한 JSON 추출 로직 (Ticket 6 보강)
+        try {
+          const jsonMatch = content.match(/\{[\s\S]*\}/);
+          if (!jsonMatch) throw new Error('JSON 형식을 찾을 수 없습니다.');
+          const cleanJson = jsonMatch[0].trim();
+          setResult(JSON.parse(cleanJson));
+          setLoading(false);
+          setStep(3);
+        } catch (e) {
+          console.error('AI 응답 파싱 에러:', content);
+          throw new Error('AI 분석 결과를 읽는 중에 문제가 발생했습니다. 다시 한 번 시도해 주세요.');
+        }
       }
     } catch (e) {
       console.error(e);
