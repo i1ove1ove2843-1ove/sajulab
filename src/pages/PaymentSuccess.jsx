@@ -125,7 +125,8 @@ export default function PaymentSuccess() {
           setStatus('completed');
         } catch (e) {
           console.error('AI 응답 파싱 에러:', content);
-          throw new Error('AI 분석 결과를 처리하는 중에 문제가 발생했습니다. 다시 시도해 주세요.');
+          const snippet = content ? content.substring(0, 100) + '...' : '응답 없음';
+          throw new Error(`AI 분석 결과 처리 실패. (응답: ${snippet}) 사유: ${e.message}`);
         }
       } catch (e) {
         console.error(e);

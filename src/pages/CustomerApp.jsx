@@ -227,7 +227,9 @@ export default function CustomerApp() {
           setStep(3);
         } catch (e) {
           console.error('AI 응답 파싱 에러:', content);
-          throw new Error('AI 분석 결과를 읽는 중에 문제가 발생했습니다. 다시 한 번 시도해 주세요.');
+          // 디버깅을 위해 실제 응답 내용을 일부 포함하여 에러 출력
+          const snippet = content ? content.substring(0, 100) + '...' : '응답 없음';
+          throw new Error(`분석 결과를 읽지 못했습니다. (AI 응답: ${snippet}) 사유: ${e.message}`);
         }
       }
     } catch (e) {
