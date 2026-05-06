@@ -193,7 +193,7 @@ export default function CustomerApp() {
             // 로컬에서는 직접 Gemini 호출 (VITE_GEMINI_API_KEY 사용)
             const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
             analyzeRes = await fetch(
-              `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+              `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
               {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
