@@ -205,17 +205,18 @@ export default function CustomerApp() {
           }
         }
 
+        // 응답 텍스트를 한 번만 읽어서 변수에 저장 (중복 읽기 에러 방지)
         const rawResponse = await analyzeRes.text();
+        
+        if (!analyzeRes.ok) {
+          throw new Error(`서버 에러 (${analyzeRes.status}): ${rawResponse.substring(0, 100)}`);
+        }
+
         let analyzeData;
         try {
           analyzeData = JSON.parse(rawResponse);
         } catch (e) {
-          throw new Error('서버 응답 형식이 올바르지 않습니다.');
-        }
-
-        if (!analyzeRes.ok) {
-          const errorDetail = await analyzeRes.text();
-          throw new Error(`서버 에러 (${analyzeRes.status}): ${errorDetail.substring(0, 50)}...`);
+          throw new Error('서버 응답이 올바른 JSON 형식이 아닙니다.');
         }
 
         const content = isLocal && !analyzeData.content ? analyzeData.candidates?.[0]?.content?.parts?.[0]?.text : analyzeData.content;
